@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - main
+      
+# This workflow is triggered on pushes to the repository.
+# on: push    # Default will running for every branch.
+
+name: Android App
+jobs:
+  build:
+    name: Build Apps
+    
+     # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    steps:
+     
+     # Setup Tagging For Sorted releases
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+     
+     # Setup Java environment in order to build the app.
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+    
+    # Setup the flutter environment.
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+    # flutter-version: '1.12.x' # you can also specify exact version of flutter
+    
+    # Get flutter dependencies.
+      - name: Install pub Dependencies
+        run: flutter pub get
+   
+   #Start building Applications
+      - name: Build Android App
+        run: flutter build apk --split-per-abi
+   
+   # Upload generated file to the releases section.
+      - name: Release Apps
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.APP_VERSION }}
+          name: ${{ env.APP_VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: 'build/app/outputs/apk/release/*.apk'
