@@ -1,10 +1,10 @@
  steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA', '.']
+   args: ['build', '-t', 'gcr.io/swift-handler-339315/flutter-docker:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA']
+   args: ['push', 'gcr.io/swift-handler-339315/flutter-docker:$COMMIT_SHA']
  # Deploy container image to Cloud Run
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
@@ -13,8 +13,8 @@
    - 'deploy'
    - 'flutter-docker'
    - '--image'
-   - 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA'
+   - 'gcr.io/swift-handler-339315/flutter-docker:$COMMIT_SHA'
    - '--region'
    - 'europe-west1'
  images:
- - 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA'
+ - 'gcr.io/swift-handler-339315/flutter-docker:$COMMIT_SHA'
