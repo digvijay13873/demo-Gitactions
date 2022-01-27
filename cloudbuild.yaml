@@ -4,17 +4,17 @@
    args: ['build', '-t', 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA']
+   args: ['push', 'gcr.io/animated-alloy-337110/demo-Gitactions:$COMMIT_SHA']
  # Deploy container image to Cloud Run
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
    args:
    - 'run'
    - 'deploy'
-   - 'flutter-docker'
+   - 'demo-Gitactions'
    - '--image'
-   - 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA'
+   - 'gcr.io/animated-alloy-337110/demo-Gitactions:$COMMIT_SHA'
    - '--region'
    - 'europe-west1'
  images:
- - 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA'
+ - 'gcr.io/animated-alloy-337110/demo-Gitactions:$COMMIT_SHA'
