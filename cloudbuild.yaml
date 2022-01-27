@@ -1,4 +1,4 @@
-steps:
+ steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
    args: ['build', '-t', 'gcr.io/animated-alloy-337110/flutter-docker:$COMMIT_SHA', '.']
